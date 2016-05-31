@@ -1,0 +1,29 @@
+{
+  "name": "pug-static-loader",
+  "description": "webpack loader that compiles pug to static html",
+  "version": "0.0.0",
+  "author": "Jeff Escalante",
+  "ava": {
+    "verbose": "true"
+  },
+  "dependencies": {
+    "joi": "^8.0.5",
+    "pug": "^2.0.0-alpha8"
+  },
+  "devDependencies": {
+    "ava": "^0.15.1",
+    "coveralls": "^2.11.9",
+    "nyc": "^6.4.4",
+    "rimraf": "^2.5.2",
+    "standard": "7.x",
+    "webpack": "^1.13.1"
+  },
+  "license": "MIT",
+  "main": "lib",
+  "scripts": {
+    "coverage": "nyc ava",
+    "coveralls": "nyc --reporter=lcov ava && cat ./coverage/lcov.info | coveralls",
+    "lint": "standard",
+    "test": "ava"
+  }
+}
