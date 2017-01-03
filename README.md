@@ -1,5 +1,12 @@
 # Pug Static Loader
 
+:recycle: Instead of using this plugin, a combination of [pug-loader](https://github.com/pugjs/pug-loader/) and [apply-loader](https://github.com/mogelbrod/apply-loader) produce the same results: 
+```javascript
+require("apply-loader!pug-loader!./foo.pug")
+```
+
+----
+
 [![npm](http://img.shields.io/npm/v/pug-static-loader.svg?style=flat)](https://badge.fury.io/js/pug-static-loader) [![tests](http://img.shields.io/travis/static-dev/pug-static-loader/master.svg?style=flat)](https://travis-ci.org/static-dev/pug-static-loader) [![dependencies](http://img.shields.io/david/static-dev/pug-static-loader.svg?style=flat)](https://david-dm.org/static-dev/pug-static-loader)
 [![coverage](http://img.shields.io/coveralls/static-dev/pug-static-loader.svg?style=flat)](https://coveralls.io/github/static-dev/pug-static-loader)
 
