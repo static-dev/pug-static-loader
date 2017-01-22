@@ -7,15 +7,15 @@
     "verbose": "true"
   },
   "dependencies": {
-    "joi": "^8.0.5",
+    "joi": "^10.2.0",
     "pug": "^2.0.0-alpha8"
   },
   "devDependencies": {
-    "ava": "^0.15.1",
+    "ava": "^0.17.0",
     "coveralls": "^2.11.9",
-    "nyc": "^6.4.4",
+    "nyc": "^10.1.2",
     "rimraf": "^2.5.2",
-    "standard": "7.x",
+    "standard": "^8.6.0",
     "webpack": "^1.13.1"
   },
   "license": "MIT",
