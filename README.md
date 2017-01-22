@@ -1,5 +1,7 @@
 # Pug Static Loader
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/static-dev/pug-static-loader.svg)](https://greenkeeper.io/)
+
 :recycle: Instead of using this plugin, a combination of [pug-loader](https://github.com/pugjs/pug-loader/) and [apply-loader](https://github.com/mogelbrod/apply-loader) produce the same results: 
 ```javascript
 require("apply-loader!pug-loader!./foo.pug")
