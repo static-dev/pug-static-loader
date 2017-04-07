@@ -1,8 +1,9 @@
 # Pug Static Loader
 
-:recycle: Instead of using this plugin, a combination of [pug-loader](https://github.com/pugjs/pug-loader/) and [apply-loader](https://github.com/mogelbrod/apply-loader) produce the same results: 
-```javascript
-require("apply-loader!pug-loader!./foo.pug")
+:recycle: Instead of using this plugin, a combination of [pug-loader](https://github.com/pugjs/pug-loader/) and [apply-loader](https://github.com/mogelbrod/apply-loader) produce the same results:
+
+```js
+require('apply-loader!pug-loader!./foo.pug')
 ```
 
 ----
@@ -26,21 +27,20 @@ If you are looking for a simple, solid, and well maintained webpack loader that 
 
 ### Usage
 
-This loader does not accept any options via `query`, because all `query` options are stringified, which means that functions cannot be passed. However, it's quite a common use-case to pass a function to pug as a local, and unfortunately functions cannot be stringified. Also querystrings are ugly.
-
-So instead, this loader pulls settings directly from the webpack options, from the `pug` key. If you were to set up a simple webpack project using this loader, it would look something like this:
+Use as usual, passing in any options to `options`. Locals can go to a `locals` configuration key. If you were to set up a simple webpack project using this loader, it would look something like this:
 
 ```js
 // webpack.config.js
 module.exports = {
   module: {
-    loaders: [
-      { test: /\.pug$/, loader: 'pug-static' }
-    ]
-  },
-  pug: {
-    pretty: false,
-    locals: { foo: 'bar' }
+    rules: [{
+      test: /\.pug$/,
+      loader: 'pug-static-loader',
+      options: {
+        pretty: false,
+        locals: { foo: 'bar' }
+      }
+    }]
   }
 }
 ```

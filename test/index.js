@@ -10,10 +10,10 @@ test.cb('compiles a pug template', (t) => {
   const p = path.join(fixturesPath, 'default')
   webpack({
     context: p,
-    entry: path.join(p, 'app.js'),
+    entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
-    resolveLoader: { root: path.resolve('..') },
-    module: { loaders: [{ test: /\.pug$/, loader: 'lib' }] }
+    resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
+    module: { loaders: [{ test: /\.pug$/, loader: 'pug' }] }
   }, (err, stats) => {
     if (err) { t.end(err) }
     const src = fs.readFileSync(path.join(p, 'bundle.js'), 'utf8')
@@ -26,10 +26,10 @@ test.cb('compiles a pug template + tracks dependencies', (t) => {
   const p = path.join(fixturesPath, 'dependencies')
   webpack({
     context: p,
-    entry: path.join(p, 'app.js'),
+    entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
-    resolveLoader: { root: path.resolve('..') },
-    module: { loaders: [{ test: /\.pug$/, loader: 'lib' }] }
+    resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
+    module: { loaders: [{ test: /\.pug$/, loader: 'pug' }] }
   }, (err, stats) => {
     if (err) { t.end(err) }
     const src = fs.readFileSync(path.join(p, 'bundle.js'), 'utf8')
@@ -44,11 +44,15 @@ test.cb('accepts locals through options object', (t) => {
   const p = path.join(fixturesPath, 'locals')
   webpack({
     context: p,
-    entry: path.join(p, 'app.js'),
+    entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
-    resolveLoader: { root: path.resolve('..') },
-    module: { loaders: [{ test: /\.pug$/, loader: 'lib' }] },
-    pug: { locals: { foo: () => 'bar' } }
+    resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
+    module: {
+      rules: [{
+        test: /\.pug$/,
+        use: [{ loader: 'pug', options: { locals: { foo: () => 'bar' } } }]
+      }]
+    }
   }, (err, stats) => {
     if (err) { t.end(err) }
     const src = fs.readFileSync(path.join(p, 'bundle.js'), 'utf8')
@@ -61,15 +65,20 @@ test.cb('throws if options are invalid', (t) => {
   const p = path.join(fixturesPath, 'error')
   webpack({
     context: p,
-    entry: path.join(p, 'app.js'),
+    entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
-    resolveLoader: { root: path.resolve('..') },
-    module: { loaders: [{ test: /\.pug$/, loader: 'lib' }] },
-    pug: { locals: 'wow' }
+    resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
+    module: {
+      rules: [{
+        test: /\.pug$/,
+        use: [{ loader: 'pug', options: { locals: 'wow' } }]
+      }]
+    }
   }, (_, stats) => {
     if (stats.compilation.errors) {
       const err = stats.compilation.errors[0].toString()
       t.truthy(err.match('"locals" must be an object'))
+      rimraf(path.join(p, 'bundle.js'), t.end)
       t.end()
     } else {
       t.end('no error present with invalid options')
