@@ -13,7 +13,12 @@ test.cb('compiles a pug template', (t) => {
     entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
     resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
-    module: { loaders: [{ test: /\.pug$/, loader: 'pug' }] }
+    module: {
+      rules: [{
+        test: /\.pug$/,
+        use: [{ loader: 'source-loader' }, { loader: 'pug' }]
+      }]
+    }
   }, (err, stats) => {
     if (err) { t.end(err) }
     const src = fs.readFileSync(path.join(p, 'bundle.js'), 'utf8')
@@ -29,7 +34,12 @@ test.cb('compiles a pug template + tracks dependencies', (t) => {
     entry: { bundle: path.join(p, 'app.js') },
     output: { path: p },
     resolveLoader: { alias: { pug: path.resolve(__dirname, '../lib') } },
-    module: { loaders: [{ test: /\.pug$/, loader: 'pug' }] }
+    module: {
+      rules: [{
+        test: /\.pug$/,
+        use: [{ loader: 'source-loader' }, { loader: 'pug' }]
+      }]
+    }
   }, (err, stats) => {
     if (err) { t.end(err) }
     const src = fs.readFileSync(path.join(p, 'bundle.js'), 'utf8')
@@ -50,7 +60,7 @@ test.cb('accepts locals through options object', (t) => {
     module: {
       rules: [{
         test: /\.pug$/,
-        use: [{ loader: 'pug', options: { locals: { foo: () => 'bar' } } }]
+        use: [{ loader: 'source-loader' }, { loader: 'pug', options: { locals: { foo: () => 'bar' } } }]
       }]
     }
   }, (err, stats) => {
@@ -71,7 +81,7 @@ test.cb('throws if options are invalid', (t) => {
     module: {
       rules: [{
         test: /\.pug$/,
-        use: [{ loader: 'pug', options: { locals: 'wow' } }]
+        use: [{ loader: 'source-loader' }, { loader: 'pug', options: { locals: 'wow' } }]
       }]
     }
   }, (_, stats) => {

@@ -34,6 +34,8 @@ Use as usual, passing in any options to `options`. Locals can go to a `locals` c
 module.exports = {
   module: {
     rules: [{
+      loader: 'source-loader'
+    }, {
       test: /\.pug$/,
       loader: 'pug-static-loader',
       options: {
@@ -45,7 +47,9 @@ module.exports = {
 }
 ```
 
-The loader simply returns an export of a string containing the compiled html. Now you also probably would want to extract out the resulting code and write it to an html file, rather than letting it chill in your javascript output, but that's not part of what a loader can do, so use some plugins or maybe spike for this instead.
+The loader returns the raw compiled html, so that it can be further processed by other loaders if necessary. This makes this loader chain-able. However, raw html is also not valid javascript, so if you try to use this loader on its own, you will get a webpack error. We recommend using [source-loader](https://github.com/static-dev/source-loader) to transform the raw source into an exported string so that it can be consumed by webpack.
+
+Now you might also want to extract out the resulting code and write it to an html file, rather than letting it chill in your javascript output, but that's not part of what a loader can do, so use some plugins or maybe [spike](https://spike.cf) for this instead.
 
 This loader also exposes the source of the original pug files internally for plugins to access, using the `_src` property of each webpack module object.
 
